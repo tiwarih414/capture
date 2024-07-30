@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 
 private val DarkColorScheme = darkColorScheme(
     primary = appColor,
@@ -45,7 +46,7 @@ fun AppTheme(
 }
 
 @Composable
-fun VerticalSpacing(spacing: Dp) = Spacer(modifier = Modifier.height(spacing))
-
-@Composable
-fun HorizontalSpacing(spacing: Dp) = Spacer(modifier = Modifier.width(spacing))
+fun AppSpacing(height: Dp = 0.dp, width: Dp = 0.dp) {
+    Spacer(modifier = Modifier.height(height))
+    Spacer(modifier = Modifier.width(width))
+}

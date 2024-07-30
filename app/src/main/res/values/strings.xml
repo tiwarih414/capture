@@ -5,4 +5,7 @@
     <string name="favorite">Favorite</string>
     <string name="setting">Setting</string>
     <string name="permission_required">This permission is important for this app. Please grant the permission.</string>
+    <string name="choose_action">Choose an action</string>
+    <string name="camera">Camera</string>
+    <string name="gallery">Gallery</string>
 </resources>

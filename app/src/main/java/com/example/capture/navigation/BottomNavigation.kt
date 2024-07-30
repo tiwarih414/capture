@@ -15,6 +15,7 @@ import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.example.capture.ui.theme.black300
 import com.example.capture.ui.theme.black900
 import com.example.capture.ui.theme.white
 import com.example.capture.ui.util.BottomNavItem
@@ -31,7 +32,7 @@ fun BottomBar(navController: NavHostController) {
     val currentDestination = navBackStackEntry?.destination
 
     NavigationBar(
-        containerColor = Color.White
+        containerColor = black300
     ) {
         items.forEach {
             AddItem(
@@ -70,9 +71,9 @@ fun RowScope.AddItem(
             }
         },
         colors = NavigationBarItemDefaults.colors(
-            indicatorColor = white,
-            selectedIconColor = black900,
-            selectedTextColor = black900
+            indicatorColor = black300,
+            selectedIconColor = white,
+            selectedTextColor = white
         )
     )
 }

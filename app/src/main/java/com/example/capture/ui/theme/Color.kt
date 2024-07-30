@@ -5,6 +5,7 @@ import androidx.compose.ui.graphics.Color
 val appColor = Color(0xFF0096FF)
 val white = Color(0xFFFFFFFF)
 val black900 = Color(0xFF1E1B1B)
+val black300 = Color(0xFF17091A)
 val blue600 = Color(0xFF89CFF0)
 val grey = Color(0xFF2F2C2C)
 val shimmer = Color(0xFF0096FF)
