@@ -15,19 +15,18 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.example.capture.ui.theme.AppTheme
-import com.example.capture.ui.theme.appColorBlue
 import com.example.capture.ui.theme.black300
-import com.example.capture.ui.theme.black900
 import com.example.capture.ui.theme.white
 import com.example.capture.ui.util.CameraGalleryDialog
 import com.example.capture.ui.util.checkIfVersionGreaterThanEqual33
 import com.example.capture.ui.util.checkIfVersionGreaterThanEqual34
 import com.example.capture.ui.util.checkSelfPermission
-import com.google.accompanist.permissions.ExperimentalPermissionsApi
 
 //https://developer.android.com/about/versions/14/changes/partial-photo-video-access
 
@@ -37,14 +36,17 @@ fun GridView(
     navController: NavHostController, viewModel: GridViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
-
-    if (viewModel.showDialog.value) {
-        CameraGalleryDialog(viewModel = viewModel) {
-            viewModel.showDialog.value = false
-        }
-    }
+    val viewState by viewModel.viewState.collectAsStateWithLifecycle()
 
     AppTheme {
+        if (viewModel.showDialog.value){
+            CameraGalleryDialog(
+                viewModel = viewModel,
+                onDismiss = { viewModel.showDialog.value = false },
+                context = context
+            )
+        }
+
         val scopedStorageLauncher = rememberLauncherForActivityResult(contract = ActivityResultContracts.RequestMultiplePermissions()) {
             when {
                 it.getOrDefault(
@@ -54,7 +56,7 @@ fun GridView(
                 ) and it.getOrDefault(
                     CAMERA, false
                 ) -> {
-                    /*TODO show camera and gallery dialog here*/
+                    viewModel.showDialog.value = true
                 }
             }
         }
@@ -66,7 +68,7 @@ fun GridView(
                 ) and it.getOrDefault(
                     CAMERA, false
                 ) -> {
-                    /*TODO show camera and gallery dialog here*/
+                    viewModel.showDialog.value = true
                 }
             }
         }
@@ -74,11 +76,11 @@ fun GridView(
         val externalStorageLauncher = rememberLauncherForActivityResult(contract = ActivityResultContracts.RequestMultiplePermissions()) {
             when {
                 it.getOrDefault(
-                    READ_EXTERNAL_STORAGE, false
-                ) and it.getOrDefault(
                     CAMERA, false
+                ) and it.getOrDefault(
+                    READ_EXTERNAL_STORAGE, false
                 ) -> {
-                    /*TODO show camera and gallery dialog here*/
+                    viewModel.showDialog.value = true
                 }
             }
         }
@@ -109,7 +111,7 @@ fun GridView(
                                 if (checkSelfPermission(context, READ_MEDIA_IMAGES)
                                     && checkSelfPermission(context, CAMERA)
                                 ) {
-                                    /*TODO show camera and gallery dialog here*/
+                                    viewModel.showDialog.value = true
                                 } else {
                                     storageLauncher.launch(arrayOf(READ_MEDIA_IMAGES, CAMERA))
                                 }
@@ -119,7 +121,7 @@ fun GridView(
                                 if (checkSelfPermission(context, READ_EXTERNAL_STORAGE)
                                     && checkSelfPermission(context, CAMERA)
                                 ) {
-                                    /*TODO show camera and gallery dialog here*/
+                                    viewModel.showDialog.value = true
                                 } else {
                                     externalStorageLauncher.launch(arrayOf(READ_EXTERNAL_STORAGE, CAMERA))
                                 }

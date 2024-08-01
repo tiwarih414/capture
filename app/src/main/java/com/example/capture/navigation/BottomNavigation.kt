@@ -16,7 +16,6 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.capture.ui.theme.black300
-import com.example.capture.ui.theme.black900
 import com.example.capture.ui.theme.white
 import com.example.capture.ui.util.BottomNavItem
 
@@ -73,7 +72,8 @@ fun RowScope.AddItem(
         colors = NavigationBarItemDefaults.colors(
             indicatorColor = black300,
             selectedIconColor = white,
-            selectedTextColor = white
+            selectedTextColor = white,
+            unselectedIconColor = Color.Gray
         )
     )
 }

@@ -1,5 +1,6 @@
 package com.example.capture.ui.util
 
+import android.content.Context
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -16,9 +17,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.window.Dialog
 import androidx.core.content.FileProvider
@@ -28,30 +27,34 @@ import com.example.capture.ui.theme.AppSpacing
 import com.example.capture.ui.theme.black300
 import com.example.capture.ui.theme.spacing
 import com.example.capture.ui.theme.white
-
-/*https://github.com/KatieBarnett/Experiments/blob/main/jc-dialoganim/src/main/java/dev/katiebarnett/experiments/jcdialoganim/components/DialogAnimations.kt*/
+import kotlinx.coroutines.flow.update
+import java.util.Objects
 
 @Composable
 fun CameraGalleryDialog(
     viewModel: GridViewModel,
     onDismiss: () -> Unit,
+    context: Context
 ) {
-    val context = LocalContext.current
-
     val photoFile = context.createImageFile("capture_image_")
-    var photoUri = FileProvider.getUriForFile(context, "${context.packageName}.provider", photoFile)
+    val photoUri = FileProvider.getUriForFile(
+        Objects.requireNonNull(context), context.applicationContext.packageName + ".provider", photoFile
+    )
 
     val cameraLauncher = rememberLauncherForActivityResult(ActivityResultContracts.TakePicture()) { success ->
         if (success) {
-            println("Himanshu Camera Image : $photoUri")
+            viewModel.viewState.update { it.copy(imageUri = photoUri) }
+            onDismiss()
+        } else {
+            onDismiss()
         }
     }
 
     val galleryLauncher = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
         uri?.let {
-            photoUri = it
-            println("Himanshu Gallery Image : $it")
+            viewModel.viewState.update { viewState -> viewState.copy(imageUri = it) }
         }
+        onDismiss()
     }
 
     AnimatedVisibility(
@@ -75,10 +78,8 @@ fun CameraGalleryDialog(
                     AppSpacing(height = spacing.tiny, width = spacing.regular)
                     TextButton(
                         modifier = Modifier.fillMaxWidth(),
-                        onClick = {
-                            cameraLauncher.launch(photoUri)
-                            onDismiss()
-                        }) {
+                        onClick = { cameraLauncher.launch(photoUri) }
+                    ) {
                         Text(
                             text = stringResource(id = R.string.camera),
                             textAlign = TextAlign.Start,
@@ -90,8 +91,8 @@ fun CameraGalleryDialog(
                         modifier = Modifier.fillMaxWidth(),
                         onClick = {
                             galleryLauncher.launch("image/*")
-                            onDismiss()
-                        }) {
+                        }
+                    ) {
                         Text(
                             text = stringResource(id = R.string.gallery),
                             textAlign = TextAlign.Start,

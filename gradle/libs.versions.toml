@@ -20,6 +20,8 @@ room = "2.6.1"
 androidxSplashScreen = "1.0.1"
 androidx-navigatio-compose = "2.7.7"
 google-accompanist-permission = "0.15.0"
+androidxLifecycleExtension = "2.2.0"
+androidxLifecycleRuntime = "2.6.0"
 
 hilt = "2.50"
 androidx-hilt-compiler = "1.2.0"
@@ -53,6 +55,8 @@ androidx-material3 = { group = "androidx.compose.material3", name = "material3" 
 androidx-core-splashscreen = {module = "androidx.core:core-splashscreen", version.ref= "androidxSplashScreen"}
 androidx-navigation-compose = {module = "androidx.navigation:navigation-compose", version.ref = "androidx-navigatio-compose"}
 google-accompanist-permission = {module = "com.google.accompanist:accompanist-permissions", version.ref = "google-accompanist-permission"}
+androidx-lifecycle-extension = { module = "androidx.lifecycle:lifecycle-extensions", version.ref = "androidxLifecycleExtension" }
+androidx-lifecycle-runtime-compose = {module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "androidxLifecycleRuntime"}
 
 android-desugar-libs = { module = "com.android.tools:desugar_jdk_libs", version.ref = "androidDesugarlibs" }
 

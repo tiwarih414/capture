@@ -76,6 +76,8 @@ dependencies {
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.google.accompanist.permission)
+    implementation(libs.androidx.lifecycle.extension)
+    implementation(libs.androidx.lifecycle.runtime.compose)
 
     implementation(libs.work.manager)
 
