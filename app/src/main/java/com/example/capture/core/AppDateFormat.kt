@@ -1,4 +1,4 @@
-package com.example.capture.ui.util
+package com.example.capture.core
 
 import java.text.SimpleDateFormat
 import java.util.Date

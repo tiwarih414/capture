@@ -8,7 +8,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.capture.favorite.FavoriteView
-import com.example.capture.grid_view.GridView
+import com.example.capture.grid_view.ui.GridView
 import com.example.capture.setting.SettingView
 
 @Composable

@@ -1,4 +1,4 @@
-package com.example.capture.grid_view
+package com.example.capture.grid_view.ui
 
 import android.Manifest.permission.CAMERA
 import android.Manifest.permission.READ_EXTERNAL_STORAGE
@@ -23,10 +23,10 @@ import androidx.navigation.NavHostController
 import com.example.capture.ui.theme.AppTheme
 import com.example.capture.ui.theme.black300
 import com.example.capture.ui.theme.white
-import com.example.capture.ui.util.CameraGalleryDialog
-import com.example.capture.ui.util.checkIfVersionGreaterThanEqual33
-import com.example.capture.ui.util.checkIfVersionGreaterThanEqual34
-import com.example.capture.ui.util.checkSelfPermission
+import com.example.capture.core.CameraGalleryDialog
+import com.example.capture.core.checkIfVersionGreaterThanEqual33
+import com.example.capture.core.checkIfVersionGreaterThanEqual34
+import com.example.capture.core.checkSelfPermission
 
 //https://developer.android.com/about/versions/14/changes/partial-photo-video-access
 

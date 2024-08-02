@@ -1,4 +1,4 @@
-package com.example.capture.ui.util
+package com.example.capture.core
 
 import com.example.capture.R
 

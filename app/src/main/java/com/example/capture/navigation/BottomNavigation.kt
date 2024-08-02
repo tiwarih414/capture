@@ -17,7 +17,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.capture.ui.theme.black300
 import com.example.capture.ui.theme.white
-import com.example.capture.ui.util.BottomNavItem
+import com.example.capture.core.BottomNavItem
 
 @Composable
 fun BottomBar(navController: NavHostController) {

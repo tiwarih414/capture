@@ -1,4 +1,4 @@
-package com.example.capture.ui.util
+package com.example.capture.core
 
 import androidx.annotation.StringRes
 import androidx.compose.material3.ExperimentalMaterial3Api

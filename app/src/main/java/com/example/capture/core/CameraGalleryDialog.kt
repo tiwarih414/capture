@@ -1,4 +1,4 @@
-package com.example.capture.ui.util
+package com.example.capture.core
 
 import android.content.Context
 import android.net.Uri
@@ -22,7 +22,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.window.Dialog
 import androidx.core.content.FileProvider
 import com.example.capture.R
-import com.example.capture.grid_view.GridViewModel
+import com.example.capture.grid_view.ui.GridViewModel
 import com.example.capture.ui.theme.AppSpacing
 import com.example.capture.ui.theme.black300
 import com.example.capture.ui.theme.spacing

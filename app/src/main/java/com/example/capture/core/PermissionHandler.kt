@@ -1,4 +1,4 @@
-package com.example.capture.ui.util
+package com.example.capture.core
 
 import android.content.Context
 import android.content.pm.PackageManager

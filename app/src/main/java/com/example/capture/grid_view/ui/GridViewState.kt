@@ -1,4 +1,4 @@
-package com.example.capture.grid_view
+package com.example.capture.grid_view.ui
 
 import android.net.Uri
 
