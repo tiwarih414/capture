@@ -1,7 +1,7 @@
 package com.example.capture.grid_view.ui
 
-import android.net.Uri
+import com.example.capture.grid_view.domain.Image
 
 data class GridViewState(
-    val imageUri: Uri = Uri.EMPTY,
+    val images: List<Image> = emptyList()
 )

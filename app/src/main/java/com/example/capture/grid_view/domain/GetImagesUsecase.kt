@@ -10,12 +10,13 @@ class GetImagesUsecase(
         return repository.getImages().map { images ->
             when (imageOrder.orderType) {
                 is OrderType.Ascending -> {
-                    when(imageOrder){
+                    when (imageOrder) {
                         is ImageOrder.Date -> images.sortedBy { it.timeStamp }
                     }
                 }
+
                 is OrderType.Descending -> {
-                    when(imageOrder){
+                    when (imageOrder) {
                         is ImageOrder.Date -> images.sortedByDescending { it.timeStamp }
                     }
                 }

@@ -27,7 +27,6 @@ import com.example.capture.ui.theme.AppSpacing
 import com.example.capture.ui.theme.black300
 import com.example.capture.ui.theme.spacing
 import com.example.capture.ui.theme.white
-import kotlinx.coroutines.flow.update
 import java.util.Objects
 
 @Composable
@@ -43,7 +42,7 @@ fun CameraGalleryDialog(
 
     val cameraLauncher = rememberLauncherForActivityResult(ActivityResultContracts.TakePicture()) { success ->
         if (success) {
-            viewModel.viewState.update { it.copy(imageUri = photoUri) }
+            viewModel.insertImages(photoUri)
             onDismiss()
         } else {
             onDismiss()
@@ -52,7 +51,7 @@ fun CameraGalleryDialog(
 
     val galleryLauncher = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
         uri?.let {
-            viewModel.viewState.update { viewState -> viewState.copy(imageUri = it) }
+            viewModel.insertImages(photoUri)
         }
         onDismiss()
     }
