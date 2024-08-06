@@ -2,9 +2,10 @@ package com.example.capture.grid_view.ui
 
 import android.net.Uri
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.capture.grid_view.domain.Image
+import com.example.capture.grid_view.domain.ImageEntity
 import com.example.capture.grid_view.domain.ImageOrder
 import com.example.capture.grid_view.domain.ImageUseCases
 import com.example.capture.grid_view.domain.OrderType
@@ -14,6 +15,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.random.Random
 
 @HiltViewModel
 class GridViewModel @Inject constructor(
@@ -26,12 +28,13 @@ class GridViewModel @Inject constructor(
     var showDialog = _showDialog
 
     fun insertImages(photoUri: Uri) {
-        val requestData = Image(
-            uri = photoUri,
-            timeStamp = System.currentTimeMillis()
+        val requestData = ImageEntity(
+            uri = photoUri.toString(),
+            timeStamp = System.currentTimeMillis(),
+            height = Random.nextInt(60, 180)
         )
         viewModelScope.launch {
-            imageUseCases.insertImage.invoke(image = requestData)
+            imageUseCases.insertImage.invoke(imageEntity = requestData)
         }
     }
 
@@ -39,7 +42,7 @@ class GridViewModel @Inject constructor(
         viewModelScope.launch {
             imageUseCases.getImages.invoke(ImageOrder.Date(OrderType.Ascending))
                 .collectLatest { images ->
-                    _viewState.update { vs -> vs.copy(images = images) }
+                    _viewState.update { vs -> vs.copy(imageEntities = images) }
                 }
         }
     }

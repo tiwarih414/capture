@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.map
 class GetImagesUsecase(
     private val repository: ImageRepository
 ) {
-    operator fun invoke(imageOrder: ImageOrder = ImageOrder.Date(OrderType.Ascending)): Flow<List<Image>> {
+    operator fun invoke(imageOrder: ImageOrder = ImageOrder.Date(OrderType.Ascending)): Flow<List<ImageEntity>> {
         return repository.getImages().map { images ->
             when (imageOrder.orderType) {
                 is OrderType.Ascending -> {

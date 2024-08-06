@@ -1,7 +1,7 @@
 package com.example.capture.grid_view.ui
 
-import com.example.capture.grid_view.domain.Image
+import com.example.capture.grid_view.domain.ImageEntity
 
 data class GridViewState(
-    val images: List<Image> = emptyList()
+    val imageEntities: List<ImageEntity> = emptyList()
 )

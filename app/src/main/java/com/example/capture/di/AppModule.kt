@@ -30,17 +30,13 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun providesImageRepository(db: ImageDatabase): ImageRepository {
-        return ImageRepositoryImpl(db.imageDao)
-    }
+    fun providesImageRepository(db: ImageDatabase): ImageRepository = ImageRepositoryImpl(db.imageDao)
 
     @Provides
     @Singleton
-    fun providesImageUsecases(repository: ImageRepository): ImageUseCases{
-        return ImageUseCases(
-            getImages = GetImagesUsecase(repository),
-            deleteImage = DeleteImageUsecase(repository),
-            insertImage = AddImagesUsecase(repository)
-        )
-    }
+    fun providesImageUsecases(repository: ImageRepository): ImageUseCases = ImageUseCases(
+        getImages = GetImagesUsecase(repository),
+        deleteImage = DeleteImageUsecase(repository),
+        insertImage = AddImagesUsecase(repository)
+    )
 }

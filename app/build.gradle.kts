@@ -78,6 +78,7 @@ dependencies {
     implementation(libs.google.accompanist.permission)
     implementation(libs.androidx.lifecycle.extension)
     implementation(libs.androidx.lifecycle.runtime.compose)
+    implementation(libs.coil.compose)
 
     implementation(libs.work.manager)
 

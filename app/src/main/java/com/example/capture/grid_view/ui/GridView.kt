@@ -7,7 +7,16 @@ import android.Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED
 import android.annotation.SuppressLint
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
+import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
+import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.FabPosition
@@ -16,17 +25,26 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
+import androidx.core.net.toUri
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
-import com.example.capture.ui.theme.AppTheme
-import com.example.capture.ui.theme.black300
-import com.example.capture.ui.theme.white
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.example.capture.core.CameraGalleryDialog
 import com.example.capture.core.checkIfVersionGreaterThanEqual33
 import com.example.capture.core.checkIfVersionGreaterThanEqual34
 import com.example.capture.core.checkSelfPermission
+import com.example.capture.grid_view.domain.ImageEntity
+import com.example.capture.ui.theme.AppTheme
+import com.example.capture.ui.theme.black300
+import com.example.capture.ui.theme.spacing
+import com.example.capture.ui.theme.white
+import kotlin.random.Random
 
 //https://developer.android.com/about/versions/14/changes/partial-photo-video-access
 
@@ -38,8 +56,10 @@ fun GridView(
     val context = LocalContext.current
     val viewState by viewModel.viewState.collectAsStateWithLifecycle()
 
+    viewModel.getImages()
+
     AppTheme {
-        if (viewModel.showDialog.value){
+        if (viewModel.showDialog.value) {
             CameraGalleryDialog(
                 viewModel = viewModel,
                 onDismiss = { viewModel.showDialog.value = false },
@@ -135,7 +155,38 @@ fun GridView(
                 }
             }, floatingActionButtonPosition = FabPosition.End, containerColor = white
         ) {
-
+            LazyVerticalStaggeredGrid(
+                columns = StaggeredGridCells.Fixed(3),
+                modifier = Modifier.fillMaxSize(),
+                contentPadding = PaddingValues(spacing.small),
+                horizontalArrangement = Arrangement.spacedBy(spacing.tiny),
+                verticalItemSpacing = spacing.tiny
+            ) {
+                items(viewState.imageEntities) {
+                    Item(item = it)
+                }
+            }
         }
+    }
+}
+
+@Composable
+fun Item(
+    item: ImageEntity
+) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .clip(RoundedCornerShape(spacing.tiny))
+            .height(item.height.dp)
+    )
+    {
+        AsyncImage(
+            model = ImageRequest.Builder(LocalContext.current)
+                .scale(scale = coil.size.Scale.FIT)
+                .data(item.uri.toUri())
+                .build(),
+            contentDescription = null
+        )
     }
 }
