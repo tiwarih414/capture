@@ -8,7 +8,7 @@ import com.example.capture.grid_view.domain.ImageEntity
 
 @Database(
     entities = [ImageEntity::class],
-    version = 2
+    version = 3
 )
 abstract class ImageDatabase : RoomDatabase() {
     abstract val imageDao: ImageDao
@@ -19,6 +19,12 @@ abstract class ImageDatabase : RoomDatabase() {
         val migration_1_2 = object : Migration(1, 2) {
             override fun migrate(db: SupportSQLiteDatabase) {
                 db.execSQL("ALTER TABLE imageentity ADD COLUMN height INTEGER NOT NULL DEFAULT 100")
+            }
+        }
+
+        val migration_2_3 = object : Migration(2,3) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("ALTER TABLE imageentity RENAME TO images")
             }
         }
     }

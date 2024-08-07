@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.room.Room
 import com.example.capture.grid_view.data.ImageDatabase
 import com.example.capture.grid_view.data.ImageDatabase.Companion.migration_1_2
+import com.example.capture.grid_view.data.ImageDatabase.Companion.migration_2_3
 import com.example.capture.grid_view.data.ImageRepositoryImpl
 import com.example.capture.grid_view.domain.AddImagesUsecase
 import com.example.capture.grid_view.domain.DeleteImageUsecase
@@ -27,7 +28,7 @@ object AppModule {
             ImageDatabase::class.java,
             ImageDatabase.DATABASE_NAME
         )
-            .addMigrations(migration_1_2)
+            .addMigrations(migration_1_2, migration_2_3)
             .build()
     }
 
