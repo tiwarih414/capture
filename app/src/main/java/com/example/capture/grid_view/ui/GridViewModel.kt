@@ -27,11 +27,15 @@ class GridViewModel @Inject constructor(
     private val _showDialog = mutableStateOf(false)
     var showDialog = _showDialog
 
+    init {
+        getImages()
+    }
+
     fun insertImages(photoUri: Uri) {
         val requestData = ImageEntity(
             uri = photoUri.toString(),
             timeStamp = System.currentTimeMillis(),
-            height = Random.nextInt(60, 180)
+            height = (120..180).random()
         )
         viewModelScope.launch {
             imageUseCases.insertImage.invoke(imageEntity = requestData)

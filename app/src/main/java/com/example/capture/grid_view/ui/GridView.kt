@@ -5,8 +5,10 @@ import android.Manifest.permission.READ_EXTERNAL_STORAGE
 import android.Manifest.permission.READ_MEDIA_IMAGES
 import android.Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED
 import android.annotation.SuppressLint
+import android.widget.ImageView.ScaleType
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -25,8 +27,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
@@ -34,6 +38,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
+import coil.compose.rememberImagePainter
 import coil.request.ImageRequest
 import com.example.capture.core.CameraGalleryDialog
 import com.example.capture.core.checkIfVersionGreaterThanEqual33
@@ -44,7 +49,6 @@ import com.example.capture.ui.theme.AppTheme
 import com.example.capture.ui.theme.black300
 import com.example.capture.ui.theme.spacing
 import com.example.capture.ui.theme.white
-import kotlin.random.Random
 
 //https://developer.android.com/about/versions/14/changes/partial-photo-video-access
 
@@ -56,7 +60,7 @@ fun GridView(
     val context = LocalContext.current
     val viewState by viewModel.viewState.collectAsStateWithLifecycle()
 
-    viewModel.getImages()
+//    viewModel.getImages()
 
     AppTheme {
         if (viewModel.showDialog.value) {
@@ -157,7 +161,6 @@ fun GridView(
         ) {
             LazyVerticalStaggeredGrid(
                 columns = StaggeredGridCells.Fixed(3),
-                modifier = Modifier.fillMaxSize(),
                 contentPadding = PaddingValues(spacing.small),
                 horizontalArrangement = Arrangement.spacedBy(spacing.tiny),
                 verticalItemSpacing = spacing.tiny
@@ -176,17 +179,15 @@ fun Item(
 ) {
     Box(
         modifier = Modifier
-            .fillMaxSize()
             .clip(RoundedCornerShape(spacing.tiny))
-            .height(item.height.dp)
-    )
-    {
-        AsyncImage(
-            model = ImageRequest.Builder(LocalContext.current)
-                .scale(scale = coil.size.Scale.FIT)
-                .data(item.uri.toUri())
-                .build(),
-            contentDescription = null
+            .height(item.height.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        Image(
+            modifier = Modifier.fillMaxSize(),
+            painter = rememberImagePainter(data = item.uri.toUri()),
+            contentDescription = null,
+            contentScale = ContentScale.Crop
         )
     }
 }

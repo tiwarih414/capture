@@ -3,6 +3,7 @@ package com.example.capture.di
 import android.app.Application
 import androidx.room.Room
 import com.example.capture.grid_view.data.ImageDatabase
+import com.example.capture.grid_view.data.ImageDatabase.Companion.migration_1_2
 import com.example.capture.grid_view.data.ImageRepositoryImpl
 import com.example.capture.grid_view.domain.AddImagesUsecase
 import com.example.capture.grid_view.domain.DeleteImageUsecase
@@ -25,7 +26,9 @@ object AppModule {
             app,
             ImageDatabase::class.java,
             ImageDatabase.DATABASE_NAME
-        ).build()
+        )
+            .addMigrations(migration_1_2)
+            .build()
     }
 
     @Provides
