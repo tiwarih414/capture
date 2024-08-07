@@ -5,7 +5,6 @@ import android.Manifest.permission.READ_EXTERNAL_STORAGE
 import android.Manifest.permission.READ_MEDIA_IMAGES
 import android.Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED
 import android.annotation.SuppressLint
-import android.widget.ImageView.ScaleType
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
@@ -33,13 +32,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.core.net.toUri
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
-import coil.compose.AsyncImage
-import coil.compose.rememberImagePainter
-import coil.request.ImageRequest
+import coil.compose.rememberAsyncImagePainter
 import com.example.capture.core.CameraGalleryDialog
 import com.example.capture.core.checkIfVersionGreaterThanEqual33
 import com.example.capture.core.checkIfVersionGreaterThanEqual34
@@ -185,7 +181,7 @@ fun Item(
     ) {
         Image(
             modifier = Modifier.fillMaxSize(),
-            painter = rememberImagePainter(data = item.uri.toUri()),
+            painter = rememberAsyncImagePainter(model = item.uri),
             contentDescription = null,
             contentScale = ContentScale.Crop
         )
